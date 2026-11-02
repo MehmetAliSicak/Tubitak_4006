@@ -89,6 +89,8 @@ tr.invalid td,tr.invalid th{background:#fdecec}
 .sum td{white-space:pre-wrap;word-break:break-word}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
 .toast.show{opacity:1}
+.cta{text-align:center;padding:30px 20px;border-color:var(--accent)}
+.btn.big{font-size:1.15rem;padding:16px 28px}
 footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -159,7 +161,7 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
 
 <section id="basvuru">
   <h2>Başvuru formu</h2>
-  <p class="muted" style="margin:0 0 14px">Her alt proje için ayrı bir form doldurun. Yazdıklarınız bu cihazda taslak olarak saklanır.</p>
+  <p class="muted" style="margin:0 0 14px">Her alt proje için ayrı bir form doldurun. "Başvuruyu hazırla" ile özeti kontrol edin, sonra Gönder'e basın. Yazdıklarınız bu cihazda taslak olarak saklanır.</p>
 
   <div id="formBody" class="paper">
     <p class="head">4006 TÜBİTAK BİLİM FUARLARI DESTEKLEME PROGRAMI<br><b>4006-A</b> PROJE BAŞVURU FORMU</p>
@@ -225,7 +227,6 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
         <button type="submit" class="btn solid">Başvuruyu hazırla ✔</button>
         <button type="button" class="btn line" id="clearBtn">Temizle</button>
       </div>
-      <p class="mini">"Başvuruyu hazırla" ile özeti görürsünüz; ardından Gönder'e basarak başvurunuzu iletirsiniz.</p>
     </form>
   </div>
 
@@ -247,18 +248,18 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
 <footer>
   <div class="wrap">Bilgiler TÜBİTAK 4006-A Çağrı Metni'nden (2026) özetlenmiştir. Ayrıntı: <a href="http://bilimiz.tubitak.gov.tr" target="_blank" rel="noopener">bilimiz.tubitak.gov.tr</a><br>Koordinatör: Mehmet Ali SICAK</div>
 </footer>
+
 <div class="toast" id="toast" role="status"></div>
 
 <script>
 (function(){
   var CONFIG={
-    testDoldur:false,  // true: form deneme verileriyle dolu açılır. Yayına çıkarken false yapın.
     deadline:new Date(2026,10,13,17,30,0),
-    // Başvurular Web3Forms ile e-postanıza düşer. web3forms.com'da adresinizi yazınca
-    // size e-postayla gelen "Access Key"i aşağıya yapıştırın (adresiniz sayfada görünmez).
-    accessKey:'',
-    // Anahtar yoksa veya gönderim başarısız olursa e-posta uygulaması (mailto) kullanılır.
-    email:'programlarmetem@gmail.com'
+    // Gönderim: Google Form'a. Formda tek bir "Uzun yanıt" sorusu açın, ardından
+    // ⋮ → "Önceden doldurulmuş bağlantı al" ile aldığınız bağlantıyı buraya yapıştırın.
+    googleFormPrefilledUrl:'https://docs.google.com/forms/d/e/1FAIpQLSeSs7XuLSw1Zpr_nzoOhFbSU0OnCTeBz8pnedaDDEpioee4jg/viewform?usp=pp_url&entry.1862476074=deneme',
+    // Bağlantı yoksa veya gönderim başarısız olursa e-posta uygulaması (mailto) kullanılır.
+    email:'36263619003@ogr.inonu.edu.tr'
   };
   var AREAS=['Biyoloji','Coğrafya','Değerler Eğitimi','Dil ve Edebiyat','Fizik','Kimya','Matematik','Psikoloji','Sosyoloji','Tarih','Teknoloji ve Tasarım','Bilişim Teknolojileri ve Yazılım'];
   var TOPICS=['Aile İçi İletişim','Akıllı Ulaşım Sistemleri','Algoritma Tasarımı ve Uygulamaları','Artırılmış, Sanal ve Karma Gerçeklik','Astronomi ve Astrofizik','Bağımlılık ve Bağımlılıkla Mücadele','Bilgisayarsız Kodlama','Bilim İletişimi','Bilim Tarihi ve Felsefesi','Biyoçeşitlilik','Biyomedikal Cihaz Teknolojileri','Biyotaklit','Blokzincir','Büyük Veri ve Bulut Bilişim','Çevre ve Çevreyi Koruma','Çip Teknolojileri','Değerler Eğitimi','Dijital İkiz','Dijital Oyun Tasarımı','Dil ve Edebiyat','Doğal Afetler ve Afet Yönetimi','Doğal Miras ve Doğal Kaynaklar','E-Öğrenme','Ekolojik Denge','Ekolojik Okuryazarlık','Erişilebilir Yaşam Teknolojileri','Finansal Okuryazarlık','Genetik ve Biyoteknoloji','Gıda ve Gıda Arzı Güvenliği','Giyilebilir Teknolojiler','Göç ve Uyum','Görsel ve İşitsel Sanatlar','Havacılık ve Uzay Bilimleri','Hidrojen Enerjisi','İnsan Hakları ve Demokrasi','Jeotermal Enerji','Karbon Ayak İzi','Kuantum Teknolojileri','Kutup Keşfi ve Araştırmaları','Küresel Isınma ve İklim Değişikliği','Makine Öğrenmesi','Malzeme Bilimi ve Nanoteknoloji','Medya Okuryazarlığı','Milli Teknoloji Hamlesi','Nörobilim ve Nöroteknoloji','Nükleer Enerji','Okul Dışı Öğrenme Ortamları','Orman ve Ormanları Koruma','Oyun ve Oyunlaştırma','Robotik ve Kodlama','Sağlıklı Beslenme','Sağlıklı Yaşam ve Spor','Salgın Hastalıklar ve Salgınla Mücadele','Sıfır Atık ve Geri Dönüşüm','Siber Güvenlik','Siber Psikoloji','Somut Kültürel Miras','Somut Olmayan Kültürel Miras','Sorumlu Üretim ve Tüketim','STEAM (Fen, Teknoloji, Mühendislik, Sanat ve Matematik)','Sürdürülebilir Şehirler ve Toplumlar','Tarım ve Hayvancılık Teknolojileri','Yabancı Dil Eğitimi','Yapay Zekâ','Yenilenebilir Enerji','Yer ve Deniz Bilimleri','Yoksullukla Mücadele'];
@@ -330,17 +331,6 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
       $$('textarea').forEach(upd);
     }catch(e){}
   })();
-
-  /* deneme verileri */
-  if(CONFIG.testDoldur){
-    var w=function(n,k){var a=[];for(var i=0;i<n;i++)a.push(k);return a.join(' ')};
-    var T={teacher:'Deneme Öğretmen',title:'Deneme Alt Projesi',contact:'05550000000',area:'Fizik',topic:'Yenilenebilir Enerji',
-      aim:w(50,'amaç'),method:w(60,'yöntem'),result:w(60,'sonuç')};
-    Object.keys(T).forEach(function(k){$('#'+k).value=T[k]});
-    box.innerHTML='';addStu('Ali Veli – 7/A');addStu('Ayşe Yılmaz – 7/B');
-    $('input[name=type][value="Tasarım"]').checked=true;$('input[name=survey][value="Hayır"]').checked=true;
-    $$('textarea').forEach(upd);
-  }
   $('#form').addEventListener('input',save);
   $('#form').addEventListener('change',save);
 
@@ -380,16 +370,19 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
     var L=lines(data());
     text='4006 TÜBİTAK BİLİM FUARLARI DESTEKLEME PROGRAMI\n4006-A PROJE BAŞVURU FORMU\n\n'+L.map(function(r){return r[0]+':\n'+r[1]}).join('\n\n');
     $('#sumTable').innerHTML=L.map(function(r){return '<tr><th>'+r[0]+'</th><td>'+esc(r[1])+'</td></tr>'}).join('');
-    $('#sendBtn').disabled=false;$('#sendBtn').classList.remove('hidden');$('#editBtn').classList.remove('hidden');$('#copyBtn').classList.add('hidden');$('#mailBtn').classList.add('hidden');$('#newBtn').classList.add('hidden');
+    $('#sendBtn').disabled=false;$('#sendBtn').textContent='✉ Gönder';$('#sendBtn').classList.remove('hidden');$('#editBtn').classList.remove('hidden');
+    $('#copyBtn').classList.add('hidden');$('#mailBtn').classList.add('hidden');$('#newBtn').classList.add('hidden');
     $('#sendInfo').innerHTML='Özetinizi kontrol edin. Doğruysa <b>Gönder</b>\'e basın.';
     $('#formBody').classList.add('hidden');$('#resultBox').classList.remove('hidden');
     $('#basvuru').scrollIntoView({behavior:'smooth'});
   });
+
   function copy(s,msg,done){
     function fb(){var t=document.createElement('textarea');t.value=s;document.body.appendChild(t);t.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}t.remove();toast(ok?msg:'Kopyalanamadı, metni elle seçin');if(done)done()}
     if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s).then(function(){toast(msg);if(done)done()},fb);else fb();
   }
   $('#copyBtn').addEventListener('click',function(){copy(text,'Özet kopyalandı')});
+
   function openMail(){
     var subj='4006 Alt Proje Başvurusu – '+(data().title||''),body=encodeURIComponent(text),long=body.length>1800;
     // Uzun metin e-posta uygulamasında kesilebilir: metin panoya kopyalanır, gövdeye "yapıştırın" yazılır
@@ -398,27 +391,32 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
     });
   }
   $('#mailBtn').addEventListener('click',openMail);
+
+  // Önceden doldurulmuş Google Form bağlantısından gönderim adresini ve soru kodunu çıkarır
+  function googleForm(){
+    var u=CONFIG.googleFormPrefilledUrl,m=u&&u.match(/entry\.\d+/);
+    if(!m||u.indexOf('/forms/')===-1)return null;
+    return {action:u.split('?')[0].replace(/\/viewform$/,'/formResponse'),entry:m[0]};
+  }
+
   $('#sendBtn').addEventListener('click',function(){
-    var btn=$('#sendBtn'),d=data();
+    var btn=$('#sendBtn'),gf=googleForm();
+    if(!gf){openMail();return}
     btn.disabled=true;btn.textContent='Gönderiliyor…';
-    // Alan alan değil, özet metni tek parça olarak gönderilir
-    if(!CONFIG.accessKey){btn.disabled=false;btn.textContent='✉ Gönder';openMail();return}
-    // Alan alan değil, özet metni tek parça olarak gönderilir
-    var payload={access_key:CONFIG.accessKey,subject:'4006 Alt Proje Başvurusu – '+d.title,from_name:'4006 Başvuru Formu',message:text};
-    fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
-      .then(function(r){return r.json()})
-      .then(function(j){
-        if(j.success===true||j.success==='true'){
-          store(KEY,null);
-          btn.classList.add('hidden');$('#editBtn').classList.add('hidden');$('#newBtn').classList.remove('hidden');
-          $('#sendInfo').innerHTML='<b>Başvurunuz gönderildi. Teşekkürler! 🎉</b>';
-        }else throw new Error((j&&j.message)||'Servis başvuruyu kabul etmedi');
+    var body=new URLSearchParams();body.append(gf.entry,text);
+    // Google Form yanıtı tarayıcıya okutmaz (no-cors); ağ hatası yoksa gönderilmiş sayılır
+    fetch(gf.action,{method:'POST',mode:'no-cors',body:body})
+      .then(function(){
+        store(KEY,null);
+        btn.classList.add('hidden');$('#editBtn').classList.add('hidden');$('#newBtn').classList.remove('hidden');
+        $('#sendInfo').innerHTML='<b>Başvurunuz gönderildi. Teşekkürler! 🎉</b>';
       })
       .catch(function(err){
         btn.disabled=false;btn.textContent='✉ Tekrar dene';$('#copyBtn').classList.remove('hidden');$('#mailBtn').classList.remove('hidden');
         $('#sendInfo').innerHTML='<b>Gönderilemedi.</b> İnternet bağlantınızı kontrol edip tekrar deneyin. Olmazsa "E-posta uygulamasıyla gönder" düğmesini kullanın.<br><small>Hata: '+esc(String(err&&err.message||err))+'</small>';
       });
   });
+
   function back(){$('#resultBox').classList.add('hidden');$('#formBody').classList.remove('hidden');$('#basvuru').scrollIntoView({behavior:'smooth'})}
   function reset(){$('#form').reset();box.innerHTML='';addStu();addStu();$$('textarea').forEach(upd);$$('.invalid').forEach(function(x){x.classList.remove('invalid')});store(KEY,null)}
   $('#editBtn').addEventListener('click',back);
