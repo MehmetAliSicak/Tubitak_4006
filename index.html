@@ -399,11 +399,11 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
           store(KEY,null);
           btn.classList.add('hidden');$('#editBtn').classList.add('hidden');$('#newBtn').classList.remove('hidden');
           $('#sendInfo').innerHTML='<b>Başvurunuz gönderildi. Teşekkürler! 🎉</b>';
-        }else throw new Error('fail');
+        }else throw new Error((j&&j.message)||'Servis başvuruyu kabul etmedi');
       })
-      .catch(function(){
+      .catch(function(err){
         btn.disabled=false;btn.textContent='✉ Tekrar dene';$('#copyBtn').classList.remove('hidden');
-        $('#sendInfo').innerHTML='<b>Gönderilemedi.</b> İnternet bağlantınızı kontrol edip tekrar deneyin. Olmazsa "Özeti kopyala" ile metni koordinatöre iletin.';
+        $('#sendInfo').innerHTML='<b>Gönderilemedi.</b> İnternet bağlantınızı kontrol edip tekrar deneyin. Olmazsa "Özeti kopyala" ile metni koordinatöre iletin.<br><small>Hata: '+esc(String(err&&err.message||err))+'</small>';
       });
   });
   function back(){$('#resultBox').classList.add('hidden');$('#formBody').classList.remove('hidden');$('#basvuru').scrollIntoView({behavior:'smooth'})}
