@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TÜBİTAK 4006 Bilim Fuarı | Başvuru</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--ink:#14213d;--muted:#5b6678;--line:#d5ddeb;--brand:#1d4ed8;--accent:#f59e0b;--ok:#15803d;--bad:#b91c1c;--soft:#eef3ff;--warn-bg:#fff7e6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1424;--card:#151e33;--ink:#e8edf7;--muted:#9aa6bd;--line:#2c3957;--brand:#6d9bff;--accent:#fbbf24;--ok:#4ade80;--bad:#f87171;--soft:#1a2644;--warn-bg:#2b2312}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+h2{font-size:1.5rem;margin:0 0 6px}
+section{padding:30px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.muted{color:var(--muted)}
+
+.hero{background:linear-gradient(135deg,#1d4ed8,#0ea5a4);color:#fff;padding:40px 0 30px}
+.hero h1{font-size:clamp(1.8rem,5vw,2.7rem);line-height:1.15;margin:0 0 12px}
+.hero p{max-width:620px;margin:0 0 20px;font-size:1.05rem}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font:inherit;font-weight:600;padding:12px 20px;border-radius:12px;text-decoration:none;min-height:44px}
+.btn.primary{background:var(--accent);color:#1b1300}
+.btn.solid{background:var(--brand);color:#fff}
+.btn.line{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.count{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;align-items:center}
+.count div{background:rgba(255,255,255,.16);border-radius:12px;padding:8px 14px;text-align:center;min-width:68px}
+.count strong{display:block;font-size:1.5rem;line-height:1.1}
+.count small{font-size:.75rem}
+.count .t{background:none;text-align:left;font-size:.95rem;min-width:0}
+
+.fact{text-align:center}
+.fact b{display:block;font-size:1.7rem;color:var(--brand);line-height:1.15}
+.fact span{color:var(--muted);font-size:.92rem}
+ul.l{margin:8px 0 0;padding-left:20px}
+ul.l li{margin-bottom:6px}
+.dates{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.dates li{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.dates b{min-width:150px;color:var(--brand)}
+.dates li.hl{background:var(--warn-bg);border-color:var(--accent)}
+@media(max-width:520px){.dates li{flex-direction:column;gap:0}}
+.note{border:1px solid var(--accent);background:var(--warn-bg);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:.95rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:.9rem}
+.chip.m{background:var(--brand);color:#fff;border-color:transparent;font-weight:600}
+details{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+summary{cursor:pointer;padding:12px 16px;font-weight:600;min-height:44px}
+details .in{padding:0 16px 16px}
+
+/* ---- Form: PDF şablonu görünümü ---- */
+.paper{background:#fff;color:#111;border:1px solid var(--line);border-radius:6px;padding:22px 18px 26px;font-family:"Times New Roman",Times,serif;box-shadow:0 6px 24px rgba(20,33,61,.08)}
+.paper .head{text-align:center;font-style:italic;margin:0 0 16px;line-height:1.9}
+.paper .head b{background:#ffef3a;font-weight:700}
+.ft{width:100%;border-collapse:collapse;table-layout:fixed}
+.ft th,.ft td{border:1px solid #111;padding:8px 10px;vertical-align:top;text-align:left}
+.ft th{width:38%;font-weight:400;text-transform:uppercase;font-size:.95rem;line-height:1.45}
+.ft th small{display:block;text-transform:none;font-size:.95rem}
+.ft th small.cap{text-transform:uppercase}
+.ft th mark{background:#ffef3a;display:block;text-transform:none;margin-top:4px}
+.ft input[type=text],.ft select,.ft textarea{width:100%;border:0;border-bottom:1px dotted #888;background:transparent;color:#111;font:inherit;padding:6px 2px;border-radius:0}
+.ft textarea{min-height:130px;resize:vertical;border:1px dotted #888;padding:6px}
+.ft select{border:1px dotted #888;padding:6px;background:#fff}
+.ft .stu{display:flex;align-items:center;gap:6px}
+.ft .stu span{width:22px}
+.ft .stu button{border:0;background:none;color:#b91c1c;cursor:pointer;font-size:1rem;padding:4px 8px}
+.ft .opt{display:flex;gap:18px;flex-wrap:wrap}
+.ft .opt label{cursor:pointer}
+.ft .opt input{accent-color:#1d4ed8;margin-right:4px}
+.cnt{font:.82rem -apple-system,Arial,sans-serif;color:#666;margin-top:3px}
+.cnt.ok{color:#15803d}.cnt.bad{color:#b91c1c}
+.err{display:none;font:.82rem -apple-system,Arial,sans-serif;color:#b91c1c;margin-top:3px}
+tr.invalid .err{display:block}
+tr.invalid td,tr.invalid th{background:#fdecec}
+.mini{font:.85rem -apple-system,Arial,sans-serif;color:#555}
+.addstu{font:.85rem -apple-system,Arial,sans-serif;margin-top:6px;border:1px dashed #888;background:none;border-radius:8px;padding:5px 10px;cursor:pointer;color:#1d4ed8}
+.hidden{display:none!important}
+@media(max-width:640px){
+  .ft,.ft tbody,.ft tr,.ft th,.ft td{display:block;width:100%}
+  .ft tr{margin-bottom:0}
+  .ft th{border-bottom:0}
+  .ft td{border-top:1px solid #111;margin-top:-1px}
+  .paper{padding:14px 10px}
+}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.okbox{background:#eaf7ef;border:1px solid #86d3a3;color:#14532d;border-radius:12px;padding:12px 14px;margin-bottom:14px}
+.sum td{white-space:pre-wrap;word-break:break-word}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
+.toast.show{opacity:1}
+footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>TÜBİTAK 4006 Bilim Fuarı'na birlikte başvuralım 🔬</h1>
+    <p>Bir fikir, 2-4 meraklı öğrenci ve sizin rehberliğiniz yeterli. Önce kısa bilgilere göz atın, sonra aşağıdaki formu doldurun.</p>
+    <a class="btn primary" href="#basvuru">Alt proje öner →</a>
+    <div class="count">
+      <div><strong id="cd">–</strong><small>gün</small></div>
+      <div><strong id="ch">–</strong><small>saat</small></div>
+      <div><strong id="cm">–</strong><small>dakika</small></div>
+      <span class="t" id="cnote">Son başvuru: 13 Kasım 2026, 17:30</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <h2>Kısaca program</h2>
+  <p class="muted" style="margin:0 0 16px">5-12. sınıf öğrencilerinin bilimsel çalışma yapmasını destekleyen TÜBİTAK programı. Okulumuz 4006-A çağrısına başvuruyor.</p>
+  <div class="grid">
+    <div class="card fact"><b>8.000 ₺</b><span>fuar hazırlık desteği</span></div>
+    <div class="card fact"><b>+1.000 ₺</b><span>her alt proje için</span></div>
+    <div class="card fact"><b>En az 10</b><span>alt proje hedefimiz (en fazla 20)</span></div>
+    <div class="card fact"><b>2–4</b><span>öğrenci / projede</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Tarihler</h2>
+  <ul class="dates">
+    <li class="hl"><b>05.11.2026</b><span>Okul içi başvuru formu paylaşılır (aşağıdaki form)</span></li>
+    <li class="hl"><b>13.11.2026, 17:30</b><span>Son başvuru tarihi</span></li>
+    <li><b>1 Mart – 5 Haziran 2027</b><span>Bilim fuarı dönemi (2-3 tam gün)</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Sizden beklenenler</h2>
+  <div class="card">
+    <ul class="l">
+      <li><b>Fikir öğrencilerden gelsin:</b> alt proje öğrencilerin merakından doğmalı, siz rehberlik etmelisiniz.</li>
+      <li><b>2-4 öğrenci</b> ve en fazla <b>2 danışman öğretmen</b> belirleyin.</li>
+      <li><b>Tür seçin:</b> Araştırma, İnceleme veya Tasarım.</li>
+      <li><b>Bir ana alan ve bir tematik konu</b> seçin (aşağıda).</li>
+      <li>Amaç, yöntem ve beklenen sonucu <b>50–150 kelime</b> ile yazın (resmî çağrıda amaç en fazla 50 kelimedir; mümkünse 50'yi geçmeyin).</li>
+      <li>Fikir özgün olmalı; benzerlik oranı yüksek projeler değerlendirmeye alınmaz.</li>
+    </ul>
+    <div class="note"><b>Anket, test veya görüşme formu yapacaksanız:</b> formu PDF olarak hazırlayın ve <a href="https://arastirmaizinleri.meb.gov.tr/" target="_blank" rel="noopener">MEB Araştırma İzinleri</a> sitesinden izin alın. İzin belgesi olmayan proje sergilenemez. İşlem zaman aldığı için erken başlayın.</div>
+    <div class="note">İnsan veya hayvan sağlığı için risk taşıyan deneyler ve bilimsel yaklaşımı olmayan projeler kabul edilmez.</div>
+  </div>
+</section>
+
+<section>
+  <h2>Hangi alanlarda proje yazılabilir?</h2>
+  <p class="muted" style="margin:0 0 12px">12 ana alan, 67 tematik konu. Tematik konuyla ilişki kurduğunuz sürece farklı ana alan seçmek serbesttir.</p>
+  <div class="chips" id="mainAreas"></div>
+  <details>
+    <summary>67 tematik konunun tamamını gör</summary>
+    <div class="in"><div class="chips" id="topics"></div></div>
+  </details>
+</section>
+
+<section id="basvuru">
+  <h2>Başvuru formu</h2>
+  <p class="muted" style="margin:0 0 14px">Her alt proje için ayrı bir form doldurun. Yazdıklarınız bu cihazda taslak olarak saklanır.</p>
+
+  <div id="formBody" class="paper">
+    <p class="head">4006 TÜBİTAK BİLİM FUARLARI DESTEKLEME PROGRAMI<br><b>4006-A</b> PROJE BAŞVURU FORMU</p>
+    <form id="form" novalidate>
+      <table class="ft">
+        <tr data-f="teacher">
+          <th>Proje danışman öğretmeni:</th>
+          <td><input type="text" id="teacher" aria-label="Proje danışman öğretmeni" autocomplete="name"><div class="err">Danışman öğretmen adını yazın.</div></td>
+        </tr>
+        <tr data-f="students">
+          <th>Proje yapan öğrenciler<small>(en az 2 en fazla 4 öğrenci)</small></th>
+          <td><div id="students"></div><button type="button" class="addstu" id="addStu">+ Öğrenci ekle</button><div class="err">En az 2 öğrenci yazın.</div></td>
+        </tr>
+        <tr data-f="title">
+          <th>Alt proje adı:</th>
+          <td><input type="text" id="title" aria-label="Alt proje adı"><div class="err">Alt proje adını yazın.</div></td>
+        </tr>
+        <tr data-f="type">
+          <th>Alt proje türü:<small>(Araştırma, İnceleme ya da Tasarım)</small></th>
+          <td><div class="opt">
+            <label><input type="radio" name="type" value="Araştırma">Araştırma</label>
+            <label><input type="radio" name="type" value="İnceleme">İnceleme</label>
+            <label><input type="radio" name="type" value="Tasarım">Tasarım</label>
+          </div><div class="err">Bir tür seçin.</div></td>
+        </tr>
+        <tr data-f="area">
+          <th>Alt proje ana alanı:<small>(Ana alan ve Tematik Konu)</small></th>
+          <td><select id="area" aria-label="Ana alan"><option value="">Ana alan seçin…</option></select><div class="err">Ana alan seçin.</div></td>
+        </tr>
+        <tr data-f="topic">
+          <th>Alt proje tematik alanı:</th>
+          <td><select id="topic" aria-label="Tematik alan"><option value="">Tematik konu seçin…</option></select><div class="err">Tematik konu seçin.</div></td>
+        </tr>
+        <tr data-f="aim">
+          <th>Alt proje amacı ve önemi<small class="cap">(en az 50 en fazla 150 kelime)</small></th>
+          <td><textarea id="aim" data-min="50" data-max="150" aria-label="Amaç ve önem"></textarea><div class="cnt"></div><div class="err">50–150 kelime yazın.</div></td>
+        </tr>
+        <tr data-f="method">
+          <th>Alt proje yöntemi:<small class="cap">(en az 50 en fazla 150 kelime)</small></th>
+          <td><textarea id="method" data-min="50" data-max="150" aria-label="Yöntem"></textarea><div class="cnt"></div><div class="err">50–150 kelime yazın.</div></td>
+        </tr>
+        <tr data-f="result">
+          <th>Beklenen sonuç:<small class="cap">(en az 50 en fazla 150 kelime)</small></th>
+          <td><textarea id="result" data-min="50" data-max="150" aria-label="Beklenen sonuç"></textarea><div class="cnt"></div><div class="err">50–150 kelime yazın.</div></td>
+        </tr>
+        <tr data-f="survey">
+          <th>Bu bir araştırma türü proje mi? Anket/ ölçek uygulama çalışması yapılacak mı?<mark>(Anket yapılacaksa dijital olarak teslim edilmesi ve MEB araştırma ve uygulama izinleri sitesinden araştırma izni başvurusu gerekmektedir.)</mark></th>
+          <td><div class="opt">
+            <label><input type="radio" name="survey" value="Evet">Evet</label>
+            <label><input type="radio" name="survey" value="Hayır">Hayır</label>
+          </div><div class="err">Bir seçenek işaretleyin.</div></td>
+        </tr>
+      </table>
+
+      <table class="ft" style="margin-top:14px">
+        <tr data-f="contact">
+          <th>İletişim (telefon veya e-posta)<small>Okul içi takip için</small></th>
+          <td><input type="text" id="contact" aria-label="İletişim" autocomplete="tel"><div class="err">İletişim bilgisi yazın.</div></td>
+        </tr>
+      </table>
+
+      <div class="actions">
+        <button type="submit" class="btn solid">Başvuruyu hazırla ✔</button>
+        <button type="button" class="btn line" id="clearBtn">Temizle</button>
+      </div>
+      <p class="mini">"Başvuruyu hazırla" ile özeti görürsünüz; ardından Gönder'e basarak başvurunuzu iletirsiniz.</p>
+    </form>
+  </div>
+
+  <div id="resultBox" class="hidden">
+    <div class="okbox" id="sendInfo">Özetinizi kontrol edin. Doğruysa <b>Gönder</b>'e basın.</div>
+    <div class="paper"><table class="ft sum" id="sumTable"></table></div>
+    <div class="actions">
+      <button class="btn solid" id="sendBtn">✉ Gönder</button>
+      <button class="btn line" id="editBtn">✏ Düzenle</button>
+      <button class="btn line hidden" id="copyBtn">📋 Özeti kopyala</button>
+      <button class="btn line hidden" id="newBtn">+ Yeni alt proje</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">Bilgiler TÜBİTAK 4006-A Çağrı Metni'nden (2026) özetlenmiştir. Ayrıntı: <a href="http://bilimiz.tubitak.gov.tr" target="_blank" rel="noopener">bilimiz.tubitak.gov.tr</a><br>Koordinatör: Mehmet Ali SICAK</div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var CONFIG={
+    testDoldur:false,  // true: form deneme verileriyle dolu açılır. Yayına çıkarken false yapın.
+    deadline:new Date(2026,10,13,17,30,0),
+    // Başvurular form servisi (FormSubmit) üzerinden e-postaya düşer.
+    // İlk aktivasyondan sonra adresin yerine size verilen gizli kodu yazın.
+    endpoint:'https://formsubmit.co/ajax/programlarmetem@gmail.com'
+  };
+  var AREAS=['Biyoloji','Coğrafya','Değerler Eğitimi','Dil ve Edebiyat','Fizik','Kimya','Matematik','Psikoloji','Sosyoloji','Tarih','Teknoloji ve Tasarım','Bilişim Teknolojileri ve Yazılım'];
+  var TOPICS=['Aile İçi İletişim','Akıllı Ulaşım Sistemleri','Algoritma Tasarımı ve Uygulamaları','Artırılmış, Sanal ve Karma Gerçeklik','Astronomi ve Astrofizik','Bağımlılık ve Bağımlılıkla Mücadele','Bilgisayarsız Kodlama','Bilim İletişimi','Bilim Tarihi ve Felsefesi','Biyoçeşitlilik','Biyomedikal Cihaz Teknolojileri','Biyotaklit','Blokzincir','Büyük Veri ve Bulut Bilişim','Çevre ve Çevreyi Koruma','Çip Teknolojileri','Değerler Eğitimi','Dijital İkiz','Dijital Oyun Tasarımı','Dil ve Edebiyat','Doğal Afetler ve Afet Yönetimi','Doğal Miras ve Doğal Kaynaklar','E-Öğrenme','Ekolojik Denge','Ekolojik Okuryazarlık','Erişilebilir Yaşam Teknolojileri','Finansal Okuryazarlık','Genetik ve Biyoteknoloji','Gıda ve Gıda Arzı Güvenliği','Giyilebilir Teknolojiler','Göç ve Uyum','Görsel ve İşitsel Sanatlar','Havacılık ve Uzay Bilimleri','Hidrojen Enerjisi','İnsan Hakları ve Demokrasi','Jeotermal Enerji','Karbon Ayak İzi','Kuantum Teknolojileri','Kutup Keşfi ve Araştırmaları','Küresel Isınma ve İklim Değişikliği','Makine Öğrenmesi','Malzeme Bilimi ve Nanoteknoloji','Medya Okuryazarlığı','Milli Teknoloji Hamlesi','Nörobilim ve Nöroteknoloji','Nükleer Enerji','Okul Dışı Öğrenme Ortamları','Orman ve Ormanları Koruma','Oyun ve Oyunlaştırma','Robotik ve Kodlama','Sağlıklı Beslenme','Sağlıklı Yaşam ve Spor','Salgın Hastalıklar ve Salgınla Mücadele','Sıfır Atık ve Geri Dönüşüm','Siber Güvenlik','Siber Psikoloji','Somut Kültürel Miras','Somut Olmayan Kültürel Miras','Sorumlu Üretim ve Tüketim','STEAM (Fen, Teknoloji, Mühendislik, Sanat ve Matematik)','Sürdürülebilir Şehirler ve Toplumlar','Tarım ve Hayvancılık Teknolojileri','Yabancı Dil Eğitimi','Yapay Zekâ','Yenilenebilir Enerji','Yer ve Deniz Bilimleri','Yoksullukla Mücadele'];
+  var tr=function(a,b){return a.localeCompare(b,'tr')};
+  AREAS.sort(tr);TOPICS.sort(tr);
+
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var tt;
+  function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show')},2200)}
+  function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+  function esc(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+
+  function tick(){
+    var ms=CONFIG.deadline-new Date();
+    if(ms<=0){$('#cd').textContent=$('#ch').textContent=$('#cm').textContent='0';$('#cnote').textContent='Başvuru süresi sona erdi.';return}
+    var m=Math.floor(ms/60000);
+    $('#cd').textContent=Math.floor(m/1440);$('#ch').textContent=Math.floor(m%1440/60);$('#cm').textContent=m%60;
+  }
+  tick();setInterval(tick,30000);
+
+  $('#mainAreas').innerHTML=AREAS.map(function(a){return '<span class="chip m">'+a+'</span>'}).join('');
+  $('#topics').innerHTML=TOPICS.map(function(t){return '<span class="chip">'+t+'</span>'}).join('');
+  $('#area').innerHTML+=AREAS.map(function(a){return '<option>'+a+'</option>'}).join('');
+  $('#topic').innerHTML+=TOPICS.map(function(t){return '<option>'+t+'</option>'}).join('');
+
+  /* öğrenciler */
+  var box=$('#students');
+  function rows(){return $$('.stu',box)}
+  function renum(){rows().forEach(function(r,i){$('span',r).textContent=(i+1)+'-';$('button',r).style.visibility=i<2?'hidden':'visible'});$('#addStu').classList.toggle('hidden',rows().length>=4)}
+  function addStu(v){
+    if(rows().length>=4)return;
+    var d=document.createElement('div');d.className='stu';
+    d.innerHTML='<span></span><input type="text" aria-label="Öğrenci adı soyadı ve sınıfı" placeholder="Ad Soyad – Sınıf"><button type="button" aria-label="Öğrenciyi sil">✕</button>';
+    $('input',d).value=v||'';
+    $('button',d).addEventListener('click',function(){d.remove();renum();save()});
+    box.appendChild(d);renum();
+  }
+  $('#addStu').addEventListener('click',function(){addStu();$('input',rows().pop()).focus()});
+  addStu();addStu();
+
+  /* kelime sayacı */
+  function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+  function upd(ta){
+    var n=words(ta.value),min=+ta.dataset.min,max=+ta.dataset.max,c=$('.cnt',ta.parentNode);
+    c.textContent=n+' kelime'+(ta.id==='aim'&&n>50&&n<=max?' · Resmî çağrı amacı 50 kelimeyle sınırlar, mümkünse kısaltın':'');
+    c.className='cnt '+(n>=min&&n<=max?'ok':n>max?'bad':'');
+    return n>=min&&n<=max;
+  }
+  $$('textarea').forEach(function(t){t.addEventListener('input',function(){upd(t)});upd(t)});
+
+  /* taslak */
+  var KEY='tubitak4006-draft-v3',IDS=['teacher','title','area','topic','aim','method','result','contact'],st;
+  function data(){
+    var o={};IDS.forEach(function(k){o[k]=$('#'+k).value.trim()});
+    o.students=rows().map(function(r){return $('input',r).value.trim()});
+    var t=$('input[name=type]:checked'),s=$('input[name=survey]:checked');
+    o.type=t?t.value:'';o.survey=s?s.value:'';return o;
+  }
+  function save(){clearTimeout(st);st=setTimeout(function(){store(KEY,JSON.stringify(data()))},300)}
+  (function load(){
+    var raw=store(KEY);if(!raw)return;
+    try{
+      var o=JSON.parse(raw);
+      IDS.forEach(function(k){if(o[k])$('#'+k).value=o[k]});
+      if(o.students&&o.students.length){box.innerHTML='';o.students.slice(0,4).forEach(addStu);while(rows().length<2)addStu()}
+      if(o.type){var t=$('input[name=type][value="'+o.type+'"]');if(t)t.checked=true}
+      if(o.survey){var s=$('input[name=survey][value="'+o.survey+'"]');if(s)s.checked=true}
+      $$('textarea').forEach(upd);
+    }catch(e){}
+  })();
+
+  /* deneme verileri */
+  if(CONFIG.testDoldur){
+    var w=function(n,k){var a=[];for(var i=0;i<n;i++)a.push(k);return a.join(' ')};
+    var T={teacher:'Deneme Öğretmen',title:'Deneme Alt Projesi',contact:'05550000000',area:'Fizik',topic:'Yenilenebilir Enerji',
+      aim:w(50,'amaç'),method:w(60,'yöntem'),result:w(60,'sonuç')};
+    Object.keys(T).forEach(function(k){$('#'+k).value=T[k]});
+    box.innerHTML='';addStu('Ali Veli – 7/A');addStu('Ayşe Yılmaz – 7/B');
+    $('input[name=type][value="Tasarım"]').checked=true;$('input[name=survey][value="Hayır"]').checked=true;
+    $$('textarea').forEach(upd);
+  }
+  $('#form').addEventListener('input',save);
+  $('#form').addEventListener('change',save);
+
+  /* doğrulama */
+  function validate(){
+    var d=data(),first=null,ok=true;
+    function chk(name,cond){var tr=$('[data-f="'+name+'"]');tr.classList.toggle('invalid',!cond);if(!cond){ok=false;if(!first)first=tr}}
+    chk('teacher',d.teacher);
+    chk('students',d.students.filter(Boolean).length>=2);
+    chk('title',d.title);chk('type',d.type);chk('area',d.area);chk('topic',d.topic);
+    ['aim','method','result'].forEach(function(k){chk(k,upd($('#'+k)))});
+    chk('survey',d.survey);chk('contact',d.contact);
+    if(first)first.scrollIntoView({behavior:'smooth',block:'center'});
+    return ok;
+  }
+
+  function lines(d){
+    var stu=d.students.filter(Boolean).map(function(s,i){return (i+1)+'- '+s}).join('\n');
+    return [
+      ['PROJE DANIŞMAN ÖĞRETMENİ',d.teacher],
+      ['PROJE YAPAN ÖĞRENCİLER',stu],
+      ['ALT PROJE ADI',d.title],
+      ['ALT PROJE TÜRÜ',d.type],
+      ['ALT PROJE ANA ALANI',d.area],
+      ['ALT PROJE TEMATİK ALANI',d.topic],
+      ['ALT PROJE AMACI ve ÖNEMİ',d.aim],
+      ['ALT PROJE YÖNTEMİ',d.method],
+      ['BEKLENEN SONUÇ',d.result],
+      ['ARAŞTIRMA TÜRÜ / ANKET-ÖLÇEK UYGULAMASI',d.survey+(d.survey==='Evet'?' (Dijital teslim ve MEB araştırma izni gerekli)':'')],
+      ['İLETİŞİM',d.contact]
+    ];
+  }
+  var text='';
+  $('#form').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!validate()){toast('Kırmızı işaretli alanları tamamlayın');return}
+    var L=lines(data());
+    text='4006 TÜBİTAK BİLİM FUARLARI DESTEKLEME PROGRAMI\n4006-A PROJE BAŞVURU FORMU\n\n'+L.map(function(r){return r[0]+':\n'+r[1]}).join('\n\n');
+    $('#sumTable').innerHTML=L.map(function(r){return '<tr><th>'+r[0]+'</th><td>'+esc(r[1])+'</td></tr>'}).join('');
+    $('#sendBtn').disabled=false;$('#sendBtn').classList.remove('hidden');$('#editBtn').classList.remove('hidden');$('#copyBtn').classList.add('hidden');$('#newBtn').classList.add('hidden');
+    $('#sendInfo').innerHTML='Özetinizi kontrol edin. Doğruysa <b>Gönder</b>\'e basın.';
+    $('#formBody').classList.add('hidden');$('#resultBox').classList.remove('hidden');
+    $('#basvuru').scrollIntoView({behavior:'smooth'});
+  });
+  function copy(s,msg,done){
+    function fb(){var t=document.createElement('textarea');t.value=s;document.body.appendChild(t);t.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}t.remove();toast(ok?msg:'Kopyalanamadı, metni elle seçin');if(done)done()}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s).then(function(){toast(msg);if(done)done()},fb);else fb();
+  }
+  $('#copyBtn').addEventListener('click',function(){copy(text,'Özet kopyalandı')});
+  $('#sendBtn').addEventListener('click',function(){
+    var btn=$('#sendBtn'),d=data();
+    btn.disabled=true;btn.textContent='Gönderiliyor…';
+    // Alan alan değil, özet metni tek parça olarak gönderilir
+    var payload={_subject:'4006 Alt Proje Başvurusu – '+d.title,_template:'box',_captcha:'false',message:text};
+    fetch(CONFIG.endpoint,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload)})
+      .then(function(r){return r.json()})
+      .then(function(j){
+        if(j.success===true||j.success==='true'){
+          store(KEY,null);
+          btn.classList.add('hidden');$('#editBtn').classList.add('hidden');$('#newBtn').classList.remove('hidden');
+          $('#sendInfo').innerHTML='<b>Başvurunuz gönderildi. Teşekkürler! 🎉</b>';
+        }else throw new Error('fail');
+      })
+      .catch(function(){
+        btn.disabled=false;btn.textContent='✉ Tekrar dene';$('#copyBtn').classList.remove('hidden');
+        $('#sendInfo').innerHTML='<b>Gönderilemedi.</b> İnternet bağlantınızı kontrol edip tekrar deneyin. Olmazsa "Özeti kopyala" ile metni koordinatöre iletin.';
+      });
+  });
+  function back(){$('#resultBox').classList.add('hidden');$('#formBody').classList.remove('hidden');$('#basvuru').scrollIntoView({behavior:'smooth'})}
+  function reset(){$('#form').reset();box.innerHTML='';addStu();addStu();$$('textarea').forEach(upd);$$('.invalid').forEach(function(x){x.classList.remove('invalid')});store(KEY,null)}
+  $('#editBtn').addEventListener('click',back);
+  $('#newBtn').addEventListener('click',function(){reset();back()});
+  $('#clearBtn').addEventListener('click',function(){if(confirm('Formdaki tüm bilgiler silinsin mi?')){reset();toast('Temizlendi')}});
+})();
+</script>
+</body>
+</html>
