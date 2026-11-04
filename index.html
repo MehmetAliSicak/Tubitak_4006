@@ -91,6 +91,9 @@ tr.invalid td,tr.invalid th{background:#fdecec}
 .toast.show{opacity:1}
 .cta{text-align:center;padding:30px 20px;border-color:var(--accent)}
 .btn.big{font-size:1.15rem;padding:16px 28px}
+.vid{padding-top:30px}
+.vid video{width:100%;aspect-ratio:16/9;border-radius:16px;background:#06142f;display:block;box-shadow:0 10px 36px rgba(6,20,47,.35)}
+.vid .cap{margin:10px 2px 0;color:var(--muted);font-size:.92rem}
 footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -112,6 +115,16 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
 </header>
 
 <main class="wrap">
+
+<section class="vid" id="video">
+  <h2>Önce kısa videoya göz atın 🎬</h2>
+  <p class="muted" style="margin:0 0 14px">Çağrının önemli bilgileri 1,5 dakikada.</p>
+  <video controls playsinline preload="metadata" poster="4006_tanitim_video_kapak.jpg" aria-label="TÜBİTAK 4006-A tanıtım videosu">
+    <source src="4006_tanitim_videosu_muzikli.mp4" type="video/mp4">
+    Tarayıcınız videoyu oynatamıyor. <a href="4006_tanitim_videosu_muzikli.mp4">Videoyu indirin</a>.
+  </video>
+  <div class="cap">1:36 · TÜBİTAK 4006-A çağrısının özeti</div>
+</section>
 
 <section>
   <h2>Kısaca program</h2>
@@ -254,10 +267,14 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
 <script>
 (function(){
   var CONFIG={
+    testDoldur:true,  // true: form deneme verileriyle dolu açılır ve tekrar gönderme engeli kapanır. Yayına çıkarken false yapın.
     deadline:new Date(2026,10,13,17,30,0),
-    // Gönderim: Google Form'a. Formda tek bir "Uzun yanıt" sorusu açın, ardından
+    // 1) Web3Forms: web3forms.com'da e-postanızı yazınca gelen "Access Key"i buraya yapıştırın.
+    //    Başvurular e-postanıza düşer, adresiniz sayfada görünmez.
+    accessKey:'',
+    // 2) Anahtar boşsa: Google Form'a gönderim. Formda tek bir "Uzun yanıt" sorusu açın, ardından
     // ⋮ → "Önceden doldurulmuş bağlantı al" ile aldığınız bağlantıyı buraya yapıştırın.
-    googleFormPrefilledUrl:'https://docs.google.com/forms/d/e/1FAIpQLSfTKJNoSR3W5-NadSFDzcM0jeQdDLA5B7F1xYphskzeyx2ICw/viewform?usp=pp_url&entry.1223284407=deneme',
+    googleFormPrefilledUrl:'https://docs.google.com/forms/d/e/1FAIpQLSeSs7XuLSw1Zpr_nzoOhFbSU0OnCTeBz8pnedaDDEpioee4jg/viewform?usp=pp_url&entry.1862476074=deneme',
     // Bağlantı yoksa veya gönderim başarısız olursa e-posta uygulaması (mailto) kullanılır.
     email:'androidkaynak@gmail.com'
   };
@@ -331,6 +348,16 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
       $$('textarea').forEach(upd);
     }catch(e){}
   })();
+  /* deneme verileri */
+  if(CONFIG.testDoldur){
+    var fillW=function(n,k){var a=[];for(var i=0;i<n;i++)a.push(k);return a.join(' ')};
+    var T={teacher:'Deneme Öğretmen',title:'Deneme Alt Projesi',contact:'05550000000',area:'Fizik',topic:'Yenilenebilir Enerji',
+      aim:fillW(50,'amaç'),method:fillW(60,'yöntem'),result:fillW(60,'sonuç')};
+    Object.keys(T).forEach(function(k){$('#'+k).value=T[k]});
+    box.innerHTML='';addStu('Ali Veli – 7/A');addStu('Ayşe Yılmaz – 7/B');
+    $('input[name=type][value="Tasarım"]').checked=true;$('input[name=survey][value="Hayır"]').checked=true;
+    $$('textarea').forEach(upd);
+  }
   $('#form').addEventListener('input',save);
   $('#form').addEventListener('change',save);
 
@@ -377,16 +404,31 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
     $('#basvuru').scrollIntoView({behavior:'smooth'});
   });
 
+  // Aynı başvurunun tekrar gönderilmesine karşı: başvuru no + bu cihazda gönderilenlerin kaydı
+  function hash(s){var x=5381;for(var i=0;i<s.length;i++)x=((x<<5)+x+s.charCodeAt(i))>>>0;return x.toString(36).toUpperCase()}
+  function appId(){
+    var d=data(),id=hash((d.teacher+'|'+d.title).toLocaleLowerCase('tr').replace(/\s+/g,' ').trim());
+    return ('000000'+id).slice(-6);
+  }
+  function full(){
+    return 'BAŞVURU NO: '+appId()+'\nGÖNDERİM ZAMANI: '+new Date().toLocaleString('tr-TR')+
+      '\n(Aynı başvuru numarasıyla birden fazla kayıt varsa en son gönderim geçerlidir.)\n\n'+text;
+  }
+  var SENT='tubitak4006-sent-v1';
+  var sentMem=[];   // kayıt alanı kapalıysa (gizli sekme vb.) en azından sayfa açıkken tekrarı engeller
+  function sentList(){var l=[];try{l=JSON.parse(store(SENT)||'[]')}catch(e){}return l.concat(sentMem)}
+  function markSent(){var k=hash(text);sentMem.push(k);var l=[];try{l=JSON.parse(store(SENT)||'[]')}catch(e){}l.push(k);store(SENT,JSON.stringify(l.slice(-50)))}
+
   function copy(s,msg,done){
     function fb(){var t=document.createElement('textarea');t.value=s;document.body.appendChild(t);t.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}t.remove();toast(ok?msg:'Kopyalanamadı, metni elle seçin');if(done)done()}
     if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s).then(function(){toast(msg);if(done)done()},fb);else fb();
   }
-  $('#copyBtn').addEventListener('click',function(){copy(text,'Özet kopyalandı')});
+  $('#copyBtn').addEventListener('click',function(){copy(full(),'Özet kopyalandı')});
 
   function openMail(){
-    var subj='4006 Alt Proje Başvurusu – '+(data().title||''),body=encodeURIComponent(text),long=body.length>1800;
+    var subj='4006 Alt Proje Başvurusu – '+(data().title||''),fulltxt=full(),body=encodeURIComponent(fulltxt),long=body.length>1800;
     // Uzun metin e-posta uygulamasında kesilebilir: metin panoya kopyalanır, gövdeye "yapıştırın" yazılır
-    copy(text,long?'Özet kopyalandı, e-postaya yapıştırın':'Özet kopyalandı',function(){
+    copy(fulltxt,long?'Özet kopyalandı, e-postaya yapıştırın':'Özet kopyalandı',function(){
       location.href='mailto:'+CONFIG.email+'?subject='+encodeURIComponent(subj)+'&body='+(long?encodeURIComponent('Başvuru özeti panoya kopyalandı. Lütfen buraya yapıştırın (Ctrl+V / Yapıştır).'):body);
     });
   }
@@ -399,22 +441,42 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
     return {action:u.split('?')[0].replace(/\/viewform$/,'/formResponse'),entry:m[0]};
   }
 
+  function sent(){
+    var btn=$('#sendBtn');store(KEY,null);markSent();
+    btn.classList.add('hidden');$('#editBtn').classList.add('hidden');$('#newBtn').classList.remove('hidden');$('#copyBtn').classList.add('hidden');$('#mailBtn').classList.add('hidden');
+    $('#sendInfo').innerHTML='<b>Başvurunuz gönderildi. Teşekkürler! 🎉</b>';
+  }
+  function failed(err){
+    var btn=$('#sendBtn');
+    btn.disabled=false;btn.textContent='✉ Tekrar dene';$('#copyBtn').classList.remove('hidden');$('#mailBtn').classList.remove('hidden');
+    $('#sendInfo').innerHTML='<b>Gönderilemedi.</b> İnternet bağlantınızı kontrol edip tekrar deneyin. Olmazsa "E-posta uygulamasıyla gönder" düğmesini kullanın.<br><small>Hata: '+esc(String(err&&err.message||err))+'</small>';
+  }
+
   $('#sendBtn').addEventListener('click',function(){
-    var btn=$('#sendBtn'),gf=googleForm();
-    if(!gf){openMail();return}
+    var btn=$('#sendBtn'),gf=googleForm(),d=data();
+    if(!CONFIG.testDoldur&&sentList().indexOf(hash(text))>-1){
+      $('#sendInfo').innerHTML='<b>Bu başvuru bu cihazdan zaten gönderildi.</b> Aynı başvuruyu tekrar göndermenize gerek yok. Değişiklik yaptıysanız <b>Düzenle</b>\'ye basıp güncelleyin, sonra yeniden gönderin.';
+      btn.classList.add('hidden');$('#newBtn').classList.remove('hidden');return;
+    }
+    if(!CONFIG.accessKey&&!gf){openMail();return}
     btn.disabled=true;btn.textContent='Gönderiliyor…';
-    var body=new URLSearchParams();body.append(gf.entry,text);
-    // Google Form yanıtı tarayıcıya okutmaz (no-cors); ağ hatası yoksa gönderilmiş sayılır
-    fetch(gf.action,{method:'POST',mode:'no-cors',body:body})
-      .then(function(){
-        store(KEY,null);
-        btn.classList.add('hidden');$('#editBtn').classList.add('hidden');$('#newBtn').classList.remove('hidden');
-        $('#sendInfo').innerHTML='<b>Başvurunuz gönderildi. Teşekkürler! 🎉</b>';
+
+    if(CONFIG.accessKey){
+      // Web3Forms: özet metni tek parça gönderilir
+      fetch('https://api.web3forms.com/submit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json',Accept:'application/json'},
+        body:JSON.stringify({access_key:CONFIG.accessKey,subject:'4006 Alt Proje Başvurusu – '+d.title,from_name:'4006 Başvuru Formu',message:full()})
       })
-      .catch(function(err){
-        btn.disabled=false;btn.textContent='✉ Tekrar dene';$('#copyBtn').classList.remove('hidden');$('#mailBtn').classList.remove('hidden');
-        $('#sendInfo').innerHTML='<b>Gönderilemedi.</b> İnternet bağlantınızı kontrol edip tekrar deneyin. Olmazsa "E-posta uygulamasıyla gönder" düğmesini kullanın.<br><small>Hata: '+esc(String(err&&err.message||err))+'</small>';
-      });
+        .then(function(r){return r.json()})
+        .then(function(j){if(j&&j.success===true)sent();else throw new Error((j&&j.message)||'Servis başvuruyu kabul etmedi')})
+        .catch(failed);
+      return;
+    }
+
+    // Google Form yanıtı tarayıcıya okutmaz (no-cors); ağ hatası yoksa gönderilmiş sayılır
+    var body=new URLSearchParams();body.append(gf.entry,full());
+    fetch(gf.action,{method:'POST',mode:'no-cors',body:body}).then(sent).catch(failed);
   });
 
   function back(){$('#resultBox').classList.add('hidden');$('#formBody').classList.remove('hidden');$('#basvuru').scrollIntoView({behavior:'smooth'})}
