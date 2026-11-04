@@ -91,6 +91,21 @@ tr.invalid td,tr.invalid th{background:#fdecec}
 .toast.show{opacity:1}
 .cta{text-align:center;padding:30px 20px;border-color:var(--accent)}
 .btn.big{font-size:1.15rem;padding:16px 28px}
+/* gönderim onay penceresi */
+dialog.done{border:0;border-radius:22px;padding:34px 30px 26px;max-width:420px;width:calc(100% - 32px);text-align:center;background:var(--card);color:var(--ink);box-shadow:0 24px 70px rgba(6,20,47,.45)}
+dialog.done::backdrop{background:rgba(6,20,47,.62);backdrop-filter:blur(3px)}
+dialog.done[open]{animation:dlgIn .35s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes dlgIn{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:none}}
+dialog.done h3{margin:14px 0 6px;font-size:1.35rem}
+dialog.done p{margin:0 0 6px;color:var(--muted)}
+dialog.done .no{display:inline-block;margin:10px 0 18px;padding:6px 16px;border-radius:999px;background:var(--soft);font-weight:700;letter-spacing:.08em;color:var(--brand)}
+dialog.done .row2{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.tick{width:86px;height:86px;display:block;margin:0 auto}
+.tick circle{fill:#15803d;transform-origin:center;animation:pop .45s ease-out both}
+.tick path{fill:none;stroke:#fff;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .5s .3s ease-out forwards}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){dialog.done[open],.tick circle,.tick path{animation:none}.tick path{stroke-dashoffset:0}}
 .vid{padding-top:30px}
 .vid video{width:100%;aspect-ratio:16/9;border-radius:16px;background:#06142f;display:block;box-shadow:0 10px 36px rgba(6,20,47,.35)}
 .vid .cap{margin:10px 2px 0;color:var(--muted);font-size:.92rem}
@@ -262,6 +277,17 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
   <div class="wrap">Bilgiler TÜBİTAK 4006-A Çağrı Metni'nden (2026) özetlenmiştir. Ayrıntı: <a href="http://bilimiz.tubitak.gov.tr" target="_blank" rel="noopener">bilimiz.tubitak.gov.tr</a><br>Koordinatör: Mehmet Ali SICAK</div>
 </footer>
 
+<dialog class="done" id="doneDlg" aria-labelledby="doneTitle">
+  <svg class="tick" viewBox="0 0 86 86" aria-hidden="true"><circle cx="43" cy="43" r="40"/><path d="M26 44 l12 12 l23 -26"/></svg>
+  <h3 id="doneTitle">Başvurunuz gönderildi!</h3>
+  <p>Teşekkürler, başvurunuz bize ulaştı.</p>
+  <div class="no" id="doneNo"></div>
+  <p style="font-size:.88rem;margin-bottom:18px">Başvuru numaranızı not edin. Değişiklik yaparsanız aynı proje için yeniden gönderebilirsiniz.</p>
+  <div class="row2">
+    <button type="button" class="btn solid" id="doneOk">Tamam</button>
+    <button type="button" class="btn line" id="doneNew">+ Yeni alt proje</button>
+  </div>
+</dialog>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -441,10 +467,20 @@ footer{padding:20px 0 40px;text-align:center;color:var(--muted);font-size:.9rem}
     return {action:u.split('?')[0].replace(/\/viewform$/,'/formResponse'),entry:m[0]};
   }
 
+  function showDone(){
+    var dlg=$('#doneDlg');
+    $('#doneNo').textContent='Başvuru No: '+appId();
+    if(dlg&&dlg.showModal){if(!dlg.open)dlg.showModal();$('#doneOk').focus()}
+    else alert('Başvurunuz gönderildi. Teşekkürler!\nBaşvuru No: '+appId());
+  }
+  $('#doneOk').addEventListener('click',function(){$('#doneDlg').close()});
+  $('#doneNew').addEventListener('click',function(){$('#doneDlg').close();$('#newBtn').click()});
+
   function sent(){
     var btn=$('#sendBtn');store(KEY,null);markSent();
     btn.classList.add('hidden');$('#editBtn').classList.add('hidden');$('#newBtn').classList.remove('hidden');$('#copyBtn').classList.add('hidden');$('#mailBtn').classList.add('hidden');
-    $('#sendInfo').innerHTML='<b>Başvurunuz gönderildi. Teşekkürler! 🎉</b>';
+    $('#sendInfo').innerHTML='<b>Başvurunuz gönderildi. Teşekkürler! 🎉</b> Başvuru No: '+appId();
+    showDone();
   }
   function failed(err){
     var btn=$('#sendBtn');
